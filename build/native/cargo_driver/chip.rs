@@ -43,10 +43,8 @@ impl Chip {
             "xtensa-esp32-espidf" => &[Chip::ESP32],
             "xtensa-esp32s2-espidf" => &[Chip::ESP32S2],
             "xtensa-esp32s3-espidf" => &[Chip::ESP32S3],
-            // Keep C3 as the first in the list, so it is picked up by default; as C2 does not work for older ESP IDFs
-            "riscv32imc-esp-espidf" => &[Chip::ESP32C3, Chip::ESP32C2],
-            // Keep C6 at the first in the list, so it is picked up by default; as H2 does not have a Wifi
-            "riscv32imac-esp-espidf" => &[Chip::ESP32C6, Chip::ESP32C5, Chip::ESP32H2],
+            "riscv32imc-esp-espidf" => &[Chip::ESP32C3, Chip::ESP32C2], // Keep C3 as the first in the list, so it is picked up by default; as C2 does not work for older ESP IDFs
+            "riscv32imac-esp-espidf" => &[Chip::ESP32H2, Chip::ESP32C5, Chip::ESP32C6],
             "riscv32imafc-esp-espidf" => &[Chip::ESP32P4],
             _ => bail!("Unsupported target '{}'", rust_target_triple),
         };
@@ -93,34 +91,6 @@ impl Chip {
             | Self::ESP32C6
             | Self::ESP32P4 => "riscv32-esp-elf",
         }
-    }
-
-    /// The name of the clang toolchain for `idf_tools.py`.
-    ///
-    /// Used for generating the `esp-idf-sys` bindings with `bindgen`
-    pub fn clang_toolchain(&self, version: Option<&EspIdfVersion>) -> &'static str {
-        let new = version
-            .map(|version| version.major > 5 || version.major == 5 && version.minor > 0)
-            .unwrap_or(true);
-
-        if new {
-            "esp-clang"
-        } else {
-            // ESP-IDF < 5.1.0 used to have the clang toolchain named `xtensa-clang` even if
-            // it actually is still a cross-toolchain
-            "xtensa-clang"
-        }
-    }
-
-    /// The name of the ESP ROM ELF files "toolchain" for `idf_tools.py`.
-    ///
-    /// Used by recent ESP IDFs during the build process
-    pub fn esp_rom_elfs(&self, version: Option<&EspIdfVersion>) -> Option<&'static str> {
-        let exists = version
-            .map(|version| version.major > 5 || version.major == 5 && version.minor > 0)
-            .unwrap_or(true);
-
-        exists.then_some("esp-rom-elfs")
     }
 
     /// The name of the gcc toolchain for the ultra low-power co-processor for

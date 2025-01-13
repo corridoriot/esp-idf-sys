@@ -5,47 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-## [0.36.1] - 2025-01-10
-
-### Added
-- Add raw bindings for `esp_netif_net_stack.h` and `lwip/esp_netif_net_stack.h`. (#360)
-
-### Fixed
-- Fix the `esp_app_desc!` macro so that it works with recent ESP-IDF versions (5.4+, 5.2.3+, 5.3.2+)
-
-## [0.36.0] - 2025-01-02
-
-### Deprecated
-
-### Breaking
-- Updated the `embuild` dependency
-
-### Added
-- Compatibility with ESP-IDF v5.3.X
-- Add raw bindings for `sdio_slave.h` for all targets that support it and add `onewire_bus.h` (#322)
-- Add raw bindings for `onewire_device.h`
-- Add raw bindings for `esp_netif_ppp.h`
-- Add raw bindings for `esp_efuse_table.h`, `esp_https_ota.h`
-- Add raw bindings for OpenThread (#339)
-- Add raw bindings to the internal DNS resolver API. (#340)
-- Add raw bindings for `esp_littlefs.h`
-- Add raw bindings for `esp_netif_br_glue.h`
-- Add raw bindings to the `mbedtls` API
-- Use clang from ESP-IDF when possible
-- Use the `bindgen` crate re-exported from `embuild` rather than depending directly on `bindgen`
-- Add raw bindings to the `TinyUSB` API
-
-### Fixed
-- Fix rust-analyzer by not using rust libtest harness
-- Fix a typo in `BUILD-OPTIONS.md`
-- Bugfix: date and time were swapped in the generated esp_app_desc_t
-- Update to the latest-released cmake-rs fixing build issues on MacOS
-- Raise recommended ESP IDF to 5.2.3; always print recommended build versions; exclude master and release branches from the recommendation
-- Fix the build against ESP-IDF master by installing the ROM ELFs
-- Support for building on nix (ESP-IDF no longer needs to be a GIT repo) (#353, #356)
-
 ## [0.35.0] - 2024-06-23
 
 ### Deprecated

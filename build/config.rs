@@ -229,7 +229,7 @@ pub mod utils {
             fields: &'a mut Option<&'static [&'static str]>,
         }
 
-        impl<'de> Deserializer<'de> for StructFieldsDeserializer<'_> {
+        impl<'de, 'a> Deserializer<'de> for StructFieldsDeserializer<'a> {
             type Error = serde::de::value::Error;
 
             fn deserialize_any<V>(self, _visitor: V) -> Result<V::Value, Self::Error>

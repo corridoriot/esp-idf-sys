@@ -36,6 +36,7 @@ extern "Rust" {
     fn main();
 }
 
+/*
 #[no_mangle]
 pub extern "C" fn app_main() {
     unsafe {
@@ -48,7 +49,7 @@ pub extern "C" fn app_main() {
         #[cfg(any(all(not(feature = "std"), feature = "binstart"), feature = "libstart"))]
         main();
     }
-}
+} */
 
 // TODO: Move to `esp-idf-hal`. We should start precisely in the state ESP IDF was configured to be. The below should become a utility method,
 // ideally as part of `esp_idf_hal::uart` and possibly with support from future ESP IDF VFS safe APIs

@@ -60,7 +60,6 @@
 
 #ifdef ESP_IDF_COMP_EFUSE_ENABLED
 #include "esp_efuse.h"
-#include "esp_efuse_table.h"
 #endif
 
 #ifdef ESP_IDF_COMP_ESP_PM_ENABLED
@@ -100,15 +99,6 @@
 
 #ifdef ESP_IDF_COMP_ESP_NETIF_ENABLED
 #include "esp_netif.h"
-#if ESP_IDF_VERSION_MAJOR > 4
-#include "esp_netif_net_stack.h"
-#endif
-#if ESP_IDF_VERSION_MAJOR > 4 && defined(CONFIG_ESP_NETIF_TCPIP_LWIP) && defined(CONFIG_ESP_NETIF_BRIDGE_EN)
-#include "esp_netif_br_glue.h"
-#endif
-#ifdef CONFIG_LWIP_PPP_SUPPORT
-#include "esp_netif_ppp.h"
-#endif
 #endif
 
 #ifdef ESP_IDF_COMP_ESP_WIFI_ENABLED
@@ -119,16 +109,6 @@
 #include "esp_now.h"
 #include "esp_mesh.h"
 #include "esp_wpa2.h"
-#if (ESP_IDF_VERSION_MAJOR < 5 || ESP_IDF_VERSION_MAJOR == 5 && ESP_IDF_VERSION_MINOR < 1)
-#include "esp_coexist.h"
-#endif
-#endif
-
-#if defined(ESP_IDF_COMP_ESP_COEX_ENABLED) && (ESP_IDF_VERSION_MAJOR > 5 || ESP_IDF_VERSION_MAJOR == 5 && ESP_IDF_VERSION_MINOR >= 1)
-#include "esp_coexist.h"
-#ifdef CONFIG_SOC_IEEE802154_SUPPORTED
-#include "esp_coex_i154.h"
-#endif
 #endif
 
 #ifdef ESP_IDF_COMP_WPA_SUPPLICANT_ENABLED
@@ -155,29 +135,6 @@
 #include "esp_eth.h"
 #ifdef ESP_IDF_COMP_ESP_NETIF_ENABLED
 #include "esp_eth_netif_glue.h"
-#endif
-#endif
-
-// OpenThread support
-#ifdef ESP_IDF_COMP_OPENTHREAD_ENABLED
-#ifdef CONFIG_OPENTHREAD_ENABLED
-#include "esp_openthread.h"
-#include "esp_openthread_border_router.h"
-#include "esp_openthread_cli.h"
-#if (ESP_IDF_VERSION_MAJOR > 4)
-#include "esp_openthread_dns64.h"
-#endif
-#include "esp_openthread_lock.h"
-#include "esp_openthread_netif_glue.h"
-#include "esp_openthread_types.h"
-#include "openthread/dataset.h"
-#include "openthread/instance.h"
-#include "openthread/ip6.h"
-#include "openthread/joiner.h"
-#include "openthread/link.h"
-#include "openthread/logging.h"
-#include "openthread/message.h"
-#include "openthread/thread.h"
 #endif
 #endif
 
@@ -208,19 +165,12 @@
 #include "diskio_wl.h"
 #endif
 
-#if defined(ESP_IDF_COMP_JOLTWALLET__LITTLEFS_ENABLED)
-#include "esp_littlefs.h"
-#endif
 #endif
 
 #ifdef ESP_IDF_COMP_LWIP_ENABLED
-#include "lwip/dns.h"
 #include "lwip/lwip_napt.h"
 #include "lwip/netdb.h"
 #include "lwip/sockets.h"
-#if ESP_IDF_VERSION_MAJOR > 4
-#include "lwip/esp_netif_net_stack.h"
-#endif
 #include "esp_sntp.h"
 #include "ping/ping_sock.h"
 #if ESP_IDF_VERSION_MAJOR > 5 || ESP_IDF_VERSION_MAJOR == 5 && ESP_IDF_VERSION_MINOR >= 1
@@ -231,16 +181,6 @@
 #endif
 
 #ifdef ESP_IDF_COMP_MBEDTLS_ENABLED
-#include "mbedtls/ssl.h"
-#include "mbedtls/aes.h"
-#include "mbedtls/cipher.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/cmac.h"
-#include "mbedtls/ecdh.h"
-#include "mbedtls/ecp.h"
-#include "mbedtls/debug.h"
-
 #ifdef CONFIG_MBEDTLS_CERTIFICATE_BUNDLE
 #include "esp_crt_bundle.h"
 #endif
@@ -266,10 +206,6 @@
 
 #ifdef ESP_IDF_COMP_APP_UPDATE_ENABLED
 #include "esp_ota_ops.h"
-#endif
-
-#ifdef ESP_IDF_COMP_ESP_HTTPS_OTA_ENABLED
-#include "esp_https_ota.h"
 #endif
 
 #ifdef ESP_IDF_COMP_ESP_HTTP_CLIENT_ENABLED
@@ -382,7 +318,7 @@
 #endif
 #include "driver/rtc_cntl.h"
 #include "driver/rtc_io.h"
-#ifdef SOC_SDIO_SLAVE_SUPPORTED
+#ifdef CONFIG_IDF_TARGET_ESP32
 #include "driver/sdio_slave.h"
 #endif
 #include "driver/sdmmc_defs.h"
@@ -572,30 +508,9 @@
 #endif // (ESP_IDF_VERSION_MAJOR >= 5 && ESP_IDF_VERSION_MINOR >= 3
 #endif // ESP_IDF_COMP_LCD_ENABLED
 
-// Usb serial support
+// usb serial support
 #ifdef SOC_USB_SERIAL_JTAG_SUPPORTED
 #include "driver/usb_serial_jtag.h"
 #endif
 
-// Official TinyUSB remote component
-#ifdef ESP_IDF_COMP_ESPRESSIF__ESP_TINYUSB_ENABLED
-#include "tinyusb.h"
-#include "tinyusb_net.h"
-#include "tinyusb_types.h"
-#if CONFIG_TINYUSB_CDC_ENABLED
-#include "tusb_cdc_acm.h"
-#endif
-#include "tusb_config.h"
-#include "tusb_console.h"
-#include "tusb_tasks.h"
-#ifdef ESP_IDF_COMP_VFS_ENABLED
-#include "tusb_msc_storage.h"
-#include "vfs_tinyusb.h"
-#endif
-#endif
-
-// Official onewire_bus remote component
-#ifdef ESP_IDF_COMP_ESPRESSIF__ONEWIRE_BUS_ENABLED
-#include "onewire_bus.h"
-#include "onewire_device.h"
-#endif
+// n
